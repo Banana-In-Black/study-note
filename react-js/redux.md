@@ -1,4 +1,5 @@
-# Redux (predictable state container) [[doc]](https://redux.js.org/introduction)
+# Redux
+A predictable state container. [[doc]](https://redux.js.org/introduction)
 - [Translated Document](https://chentsulin.github.io/redux/index.html)
 - `npm install redux`
 - `npm install -D redux-devtools`  [[doc]](https://github.com/reduxjs/redux-devtools)
