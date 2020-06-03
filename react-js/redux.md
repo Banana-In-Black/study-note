@@ -47,9 +47,9 @@ Middleware is basically an intercepter between `store.dispatch()` to actually di
 	- `npm install immutable` [[doc]](https://facebook.github.io/immutable-js/)
 
 ### Memorization
-- Simple solution to memorize data, based on argument values. (cache size: 1)
+- Simple solution to memorize data, based on argument values. (cache size: 1, only last result)
 	- `npm install memoize-one` [[doc]](https://github.com/alexreardon/memoize-one)
-- Memorize data based on returned value of input selectors (could be another selector), and that makes selector reusable, composable.  Usually used in `connect()` to memorize derived state or props. (cache size: 1)
+- Memorize data based on returned value of input selectors (could be another selector), and that makes selector reusable, composable.  Usually used in `connect()` to memorize derived state or props. (cache size: 1, only last result)
 	- `npm install reselect` [[doc]](https://github.com/reduxjs/reselect)
 - A wrapper of reselect to enhance selector.
 	- `npm install reselect` (dependency)
