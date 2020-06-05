@@ -1,6 +1,6 @@
 # Javascript Note (ECMAScript 6)
 
-## [`this` Keyword](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this)
+## `this` Keyword [[doc]](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this)
 It's always a reference to an object (auto-boxing if it's not an object) in non-strict mode, but in strict mode it can be any value.
 - Used outside any function: refer to the global object (`window` in web).
 - Used in strict mode: It will be undefined unless being assigned
@@ -48,3 +48,24 @@ It's always a reference to an object (auto-boxing if it's not an object) in non-
 - Can't be used as a constructor
 - Don't have a `prototype` property
 - Can't use `yield` keyword, and hence can't be used as a generator function
+
+## Prototype chain [[doc]](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain)
+Each object has a private property(`obj.__proto__` or `Object.getPrototypeOf(obj)`) which holds a link to another object called its prototype. That prototype object has a prototype of its own, and so on until an object is reached with `null` as its prototype.
+
+A object's prototype is not `.prototype`
+
+```js
+function MyConstructor() {}
+MyConstructor.prototype; // MyConstructor { constructor: f }
+						 // Automatically created while a constructor function was declared
+MyConstructor.prototype.constructor === MyConstructor;  // true
+
+var obj = new MyConstructor();
+obj.prototype; // undefined
+
+Object.getPrototypeOf(obj) === obj.prototype; // false
+Object.getPrototypeOf(obj) === MyConstructor.prototype; // true
+Object.getPrototypeOf(obj) === obj.__proto__; // true
+
+Object.getPrototypeOf(MyConstructor) === Function.prototype; // true
+```
