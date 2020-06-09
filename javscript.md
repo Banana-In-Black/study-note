@@ -22,9 +22,9 @@ It's always a reference to an object (auto-boxing if it's not an object) in non-
 - Don't have their own `arguments` and `this`, so they retain the values from enclosing lexical context
 	```js
 	function foo() {
-	  setTimeout(() => {
-	    console.log('id:', this.id);
-	  }, 100);
+		setTimeout(() => {
+			console.log('id:', this.id);
+		}, 100);
 	}
 
 	var id = 21;
@@ -39,8 +39,8 @@ It's always a reference to an object (auto-boxing if it's not an object) in non-
 	arr(); // 1
 
 	function foo(n) {
-	  var f = () => arguments[0] + n; // foo's implicit arguments binding. arguments[0] is n
-	  return f();
+		var f = () => arguments[0] + n; // foo's implicit arguments binding. arguments[0] is n
+		return f();
 	}
 
 	foo(3); // 6
@@ -72,24 +72,25 @@ Object.getPrototypeOf(MyConstructor) === Function.prototype; // true
 ```
 
 ### Inheritance
+- ES6 Class keywords: `extends`, `super` [[anchor]](#extend)
 - `Object.create(proto[, propertiesObject])` [[doc]](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create)
 
 	```js
 	// Parent class
 	function Shape() {
-	this.x = 0;
-	this.y = 0;
+		this.x = 0;
+		this.y = 0;
 	}
 
 	Shape.prototype.move = function(x, y) {
-	this.x += x;
-	this.y += y;
-	console.info('Shape moved.');
+		this.x += x;
+		this.y += y;
+		console.info('Shape moved.');
 	};
 
 	// Child class
 	function Rectangle() {
-	Shape.call(this); // call super constructor.
+		Shape.call(this); // call super constructor.
 	}
 
 	// Inheritance
@@ -103,7 +104,7 @@ Object.getPrototypeOf(MyConstructor) === Function.prototype; // true
 	rect.move(1, 1); // Outputs, 'Shape moved.'
 	```
 
-	- Modify `prototype.constructor` won't have an effect while you initiate an object (by using `new`). It's only useful while you need a constructor reference from instance. [[stackoverflow]](https://stackoverflow.com/questions/9267157/why-is-it-impossible-to-change-constructor-function-from-prototype)
+	- Modify `prototype.constructor` won't have an effect while you initiate an object (by using `new`). It's only useful while you need a constructor reference from instance. [[stackoverflow1]](https://stackoverflow.com/questions/8453887/why-is-it-necessary-to-set-the-prototype-constructor) [[stackoverflow2]](https://stackoverflow.com/questions/9267157/why-is-it-impossible-to-change-constructor-function-from-prototype)
 	- The difference between
 		```js
 		Child.prototype = Object.create(Parent.prototype);
@@ -112,4 +113,108 @@ Object.getPrototypeOf(MyConstructor) === Function.prototype; // true
 		```js
 		Child.prototype = new Parent();
 		```
-		is that former can create an object that doesn't inherit from anything, ex: `Object.create(null)`, on the other hand, if you set `Child.prototype = null;` the newly created object will inherit from `Object.prototype`. [[stackoverflow]](https://stackoverflow.com/questions/4166616/understanding-the-difference-between-object-create-and-new-somefunction)
+		is that former can create an object that doesn't inherit from anything, ex: `Object.create(null)`, on the other hand, if you set `Child.prototype = null;` the newly created object will inherit from `Object.prototype`. [[stackoverflow]](https://stackoverflow.com/questions/4166616/understanding-the-difference-between-object-create-and-new-somefunction) 
+
+## Classes [[doc]](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes)
+- `class` body is executed in strict mode.
+- Class instance(private & public) / static fields declaration are still proposals.
+
+### Define classes
+- Class declaration: Unlike function declaration, it's **hoisted but not initialized**. [[stackoverflow]](https://stackoverflow.com/a/31222689)
+	```js
+	var p = new Rectangle(); // ReferenceError: Rectangle is not defined
+
+	class Rectangle { }
+	```
+- Class expression
+	```js
+	var Unnamed = class { };
+	var NamedClass = class Named { };
+	console.log(Unnamed.name); // Unnamed
+	console.log(NamedClass.name); // Named
+	```
+
+### Static method
+```js
+class Point {
+	constructor(x, y) {
+		this.x = x;
+		this.y = y;
+	}
+
+	static distance(a, b) {
+		const dx = a.x - b.x;
+		const dy = a.y - b.y;
+
+		return Math.hypot(dx, dy);
+	}
+}
+
+const p1 = new Point(5, 5);
+const p2 = new Point(10, 10);
+p1.distance; //undefined
+p2.distance; //undefined
+
+console.log(Point.distance(p1, p2)); // 7.0710678118654755
+```
+
+Before ES6:
+```js
+function Point(x, y) {
+	this.x = x;
+	this.y = y;
+}
+
+Point.distance = function(a, b) {
+	var dx = a.x - b.x;
+	var dy = a.y - b.y;
+
+	return Math.hypot(dx, dy);
+};
+```
+
+### Sub classing with `extend` <a id="extend"></a>
+- Classes can only extend one superclass.
+- Classes cannot extend regular (non-constructible) objects. If you want to inherit from a regular object, you can instead use `Object.setPrototypeOf()`.
+- If there is a constructor present in the subclass, it needs to first call `super()` before using `this`.
+
+```js
+class Animal { 
+	constructor(name) {
+		this.name = name;
+	}
+	
+	speak() {
+		console.log(`${this.name} makes a noise.`);
+	}
+}
+
+class Dog extends Animal {
+	constructor(name) {
+		super(name); // call the super class constructor and pass in the name parameter
+	}
+
+	speak() {
+		console.log(`${this.name} barks.`);
+	}
+}
+
+let d = new Dog('Mitzie');
+d.speak(); // Mitzie barks.
+```
+
+### Mix-ins
+A function with a superclass as input and a subclass extending that superclass as output can be used to implement mix-ins in ECMAScript:
+
+```js
+let calculatorMixin = Base => class extends Base {
+  	calc() { }
+};
+
+let randomizerMixin = Base => class extends Base {
+  	randomize() { }
+};
+
+class Foo { }
+class Bar extends calculatorMixin(randomizerMixin(Foo)) { }
+```
