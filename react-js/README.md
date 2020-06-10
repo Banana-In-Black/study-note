@@ -5,7 +5,7 @@
 
 ### Context [[doc]](https://reactjs.org/docs/context.html)
 - Provide a way to access data cross components instead of pass them down manually at every level.
-- <s>Using redux instead... </s>
+- <s>Using redux instead...</s>
 
 
 
@@ -97,7 +97,7 @@ Currently, to implement error boundaries can only be achieved by class component
 
 
 ### Component Lifecycle (After 16.3)
-[Lifeycycle methods interactive diagram](http://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/)
+[Lifeycycle methods interactive diagram](http://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/)  
 ![Lifecycle methods](../images/life-cycle-methods.jpeg)
 
 - Render phase: React DOM calculates the changes that needs to be committed to DOM.
@@ -244,8 +244,8 @@ But if you don't need features like above, using uncontrolled components is just
  
 - `npm install flux`
 - [Concept: Unidirectional data flow](https://github.com/facebook/flux/tree/master/examples/flux-concepts) 
-   + (Actions) > Dispatcher > Store > View > (Actions) > ...
-          ![Flow](../images/flow.png)
+	+ (Actions) > Dispatcher > Store > View > (Actions) > ...
+		![Flow](../images/flow.png)
 - View implementation > React
 - Store + Dispatcher alternative > Redux
 
