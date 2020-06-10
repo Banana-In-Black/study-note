@@ -24,7 +24,7 @@ In other words, tail call optimization means that it is possible to call a funct
 
 > A **stack frame** is a frame of data that gets pushed onto the stack. In the case of a **call stack**, a stack frame would represent a function call and its argument data. [[stackoverflow]](https://stackoverflow.com/a/10057535/2334946)
 
-## Tail Recursion <a id="recursion"></a>
+## Tail Recursion <a id="recursion"></a> [[stackoverflow]](https://stackoverflow.com/a/33930/2334946)
 - **Traditional recursion**: the typical model is that you perform your recursive calls first, and then you take the return value of the recursive call and calculate the result. In this manner, you don't get the result of your calculation until you have returned from every recursive call.
 
     ```js
@@ -68,5 +68,3 @@ In other words, tail call optimization means that it is possible to call a funct
     // tailrecsum(0, 15)
     // 15
     ```
-
-Reference: [[stackoverflow]](https://stackoverflow.com/a/33930/2334946)
