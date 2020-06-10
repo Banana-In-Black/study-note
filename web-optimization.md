@@ -12,11 +12,15 @@
 ### Features:
 
 - Binary Framing Layer: HTTP/2 communication is split into smaller messages & frames, each of which is encoded in *binary format*.
-- Multiplexed Streams: Multiple streams in flight within the same connection (One TCP connection per origin)  
+- Multiplexed Streams: Multiple streams in flight within the same connection (One TCP connection per origin)
+
 ![Multiplexing](/images/multiplexing.svg)
+
 - Stream Prioritization
-- Stateful Header Compression (HPACK)  
+- Stateful Header Compression (HPACK)
+
 ![HeaderCompression](/images/header-compression.svg)
+
 - HTTP/2 Server Push: The ability to send multiple responses for a single client request (through multiple streams).
 
 ---
