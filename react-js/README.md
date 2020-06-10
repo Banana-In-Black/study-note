@@ -98,7 +98,7 @@ Currently, to implement error boundaries can only be achieved by class component
 
 ### Component Lifecycle (After 16.3)
 [Lifeycycle methods interactive diagram](http://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/)
-![Lifecycle methods](https://pbs.twimg.com/media/DZ-97vzW4AAbcZj?format=jpg&name=large)
+![Lifecycle methods](../images/life-cycle-methods.jpeg)
 
 - Render phase: React DOM calculates the changes that needs to be committed to DOM.
 - Commit phase: React DOM actually commits those changes. 
@@ -245,7 +245,7 @@ But if you don't need features like above, using uncontrolled components is just
 - `npm install flux`
 - [Concept: Unidirectional data flow](https://github.com/facebook/flux/tree/master/examples/flux-concepts) 
    + (Actions) > Dispatcher > Store > View > (Actions) > ...
-          ![Flow](https://github.com/facebook/flux/blob/master/examples/flux-concepts/flux-simple-f8-diagram-with-client-action-1300w.png?raw=true)
+          ![Flow](../images/flow.png)
 - View implementation > React
 - Store + Dispatcher alternative > Redux
 
