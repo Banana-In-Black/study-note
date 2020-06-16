@@ -14,9 +14,9 @@ A way to analyzing how fast a program's runtime grows asymptotically.
 - Binary search: O(log n), Ω(1). (Search on a sorted array)
 > Ex: Looking for **3** in [1, 2, 3, 4, 5, 6, 7]  
 >
->    1. [**1, 2, 3, 4**, 5, 6, 7],  3 < 4
->    2. [1, 2, **3**], 3 > 2
->    3. [**3**], 3 = 3
+> 1. [**1, 2, 3, 4**, 5, 6, 7],  3 < 4  
+> 2. [1, 2, **3**], 3 > 2  
+> 3. [**3**], 3 = 3  
 >
 > Takes log<sub>2</sub> 8 = 3 times to find the target.
 
