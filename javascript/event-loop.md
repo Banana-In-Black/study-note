@@ -1,14 +1,12 @@
-# Web Fundamentals
-
-## Concurrentcy Model and the Event Loop [[MDN doc]](https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/EventLoop)
+# Event Loop [[doc]](https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/EventLoop)
 Javascript uses a single threaded runtime, but it has a concurrency model based on event loop.
 
-### Glossary
+## Glossary
 - Stack: Function calls form a stack of frames. (Call stack)
 - Heap: Objects are allocated in a heap which is just a name to denote a large (mostly unstructured) region of memory.
 - Queue: A message(event) queue. The processing of functions continues until the stack is once again empty. Then, event loop will process the messages in queue one by one.
 
-### Event Loop
+## Event Loop
 It's called this name because how it was implemented.
 
 ```js
