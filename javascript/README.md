@@ -1,4 +1,4 @@
-# Javascript Note (ECMAScript 6)
+# Javascript (ECMAScript 6)
 
 ## `this` Keyword [[doc]](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this)
 It's always a reference to an object (auto-boxing if it's not an object) in non-strict mode, but in strict mode it can be any value.
