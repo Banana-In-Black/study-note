@@ -14,7 +14,7 @@ Make class reusable, indivisual and easy to maintain.
     <form>
 ```
 
-## BEM (Block Element Modifier) [[doc]](http://getbem.com/naming/)
+## BEM (Block Element Modifier) [[doc]](http://getbem.com/naming/) <a id="bem"></a>
 - **Block**: A standalone entity that is meaningful on its own.
     ```css
     .form
