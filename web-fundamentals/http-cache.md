@@ -4,8 +4,8 @@
 It's designed to avoid unnecessary network requests. And the behavior is controlled a combination of request/response headers.
 
 ## Terminology
-- Revalidate: asking server if there's a newer version of resource
-- Fresh / Stale:
+- Revalidate: Asking server if there's a newer version of resource
+- Fresh & Stale: Resource status
 <pre>
        0            120s
        |---(fresh)---|---(stale)--->
