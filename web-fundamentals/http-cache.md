@@ -3,6 +3,16 @@
 
 It's designed to avoid unnecessary network requests. And the behavior is controlled a combination of request/response headers.
 
+## Terminology
+- Revalidate: asking server if there's a newer version of resource
+- Fresh / Stale:
+<pre>
+       0            120s
+       |---(fresh)---|---(stale)--->
+    request      max-age=120
+     fired
+</pre>
+
 ## Request Headers
 Most of time they're automatically appended to requests by the browser; used to checking for freshness (revalidate).
 - `If-Match` (with `ETag` value)
@@ -23,8 +33,14 @@ Leaving out the `Cache-Control` response header does not disable HTTP caching. T
 
 ### Cache-Control
 #### Directives
-- `no-cache`: This instructs the browser that it must revalidate with the server every time before using a cached version of the URL. (ex: index.html)
 - `no-store`: This instructs the browser and other intermediate caches (like CDNs) to never store any version of the file.
+- `no-cache`: This instructs the browser that it *must revalidate with the server every time* before using a cached version of the URL. (ex: index.html)
+- `must-revalidate`: Indicates that once a resource becomes stale, caches must not use their stale copy without successful validation on the origin server.
+    > Used to prevent using stale resources in some cases like network is unavailable or server has no response
+
+    > Difference between `no-cache` and `must-revalidate`:
+    > - `no-cache` revalidate every time before using
+    > - `must-revalidate` only revalidate after resource is stale
 - `private`: Browsers can cache the file but intermediate caches cannot. (ex: private user-relative data)
 - `public`: The response can be stored by any cache.
 - `max-age=<seconds>`: The maximum amount of time a resource is considered fresh. Unlike [`Expires`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Expires) header, this directive is relative to the time of the request.
@@ -34,10 +50,10 @@ Leaving out the `Cache-Control` response header does not disable HTTP caching. T
 ![Cache-Control Strategy](../images/cache-control.png)
 
 #### Examples
-Get a resource and cached for 2 minutes since the request fired.
+1. Get a resource and cached for 2 minutes since the request fired.
 ![max-age](../images/max-age.png)
 
-Get the same resource again within 2 minutes. (Responds with `304 Not Modified`)
+2. Get the same resource again within 2 minutes. (Responds with `304 Not Modified`)
 ![If-None-Match](../images/if-none-match-etag.png)
 
 ## Cache Invalidation
