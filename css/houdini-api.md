@@ -118,3 +118,26 @@ Essentially, the API contains functionality allowing developers to create custom
 - Register the worklet with `CSS.paintWorklet.addModule()`.
 - Include the `paint()` CSS function.
 
+```js
+registerPaint('paintWorketExample', class {
+    // An array of CSS custom properties that the Worklet will keep track of.
+    // This array represents dependencies of a paint worklet.
+    static get inputProperties() { return ['--myVariable']; }
+    // An array of input arguments that can be passed from paint() from inside the CSS.
+    static get inputArguments() { return ['<color>']; }
+    // Allow or disallow opacity for colors. If set to false, all colors will be displayed with full opacity.
+    static get contextOptions() { return {alpha: true}; }
+
+    /**
+     * @param ctx: 2D drawing context, almost identical to Canvas API’s 2D drawing context.
+     * @param size: An object containing the width and height of the element. Values are determined by the layout rendering process. Canvas size is the same as the actual size of the element.
+     * @param properties: Input variables defined in inputProperties
+     * @param args: An array of input arguments passed in paint function in CSS
+     */
+    paint(ctx, size, properties, args) {
+        /* ... */
+    }
+});
+```
+
+Exmaple: [Ripple](https://github.com/GoogleChromeLabs/houdini-samples/tree/master/paint-worklet/ripple)
