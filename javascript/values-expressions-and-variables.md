@@ -6,16 +6,18 @@ There're two kinds of values, both can be checking by `typeof(value)` or `typeof
 ### Primitive Values (Immutable)
 - Undefined: `typeof(undefined) === 'undefined'`.
 - Null: `typeof(null) === 'object'`. ([historical issue](https://stackoverflow.com/questions/18808226/why-is-typeof-null-object))
+    > In practice, `undefined` represents **unintentionally** missing value while `null` represents **intentionally** missing values. However, this is only a convention, and JavaScript doesn’t enforce this usage.
+
 - Numbers: `typeof(12.3) === 'number'`.
 - Strings: `typeof('hello') === 'string'`.
 - Booleans: `typeof(true) === 'boolean'`.
 - Symbols: `typeof(Symbol('hi')) === 'symbol'`.
 - BigInts: `typeof(BigInt(45)) === 'bigint'`.
 
-#### Immutable
+#### Immutable (Singleton)
 Trying to modify primitive values will silently be refused or result in errors depends on which mode (strict mode or not) your code is running in.
 ```js
-let str = "yikes";
+let str = 'yikes';
 str[0] = 'l';
 console.log(str); // yikes
 
