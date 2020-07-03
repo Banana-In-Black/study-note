@@ -8,8 +8,8 @@ A group of JavaScript APIs give developer the power to extend CSS by hooking int
 
 - High-level APIs: Affect rendering process
     + [Paint API](#paint-api)
-    + Layout API
-    + Animation API
+    + [Layout API](#layout-api)
+    + [Animation API](#animation-api)
 - Low-level APIs: The foundation of high-level APIs
     + [Typed Object Model API](#typed-om)
     + [Custom Properties & Values API](#custom-prop)
@@ -111,28 +111,30 @@ An API for running scripts in various stages of the rendering pipeline independe
 
 Allows developers to use JavaScript functions to draw directly into an element’s background, border, or content such as CSS `background-image`, `border-image`, `mask-image`, etc.
 
-Essentially, the API contains functionality allowing developers to create custom values for `paint()`, a CSS `<image>` function.
+Essentially, the API contains functionality allowing developers to create custom values for `paint()`, a CSS `<image>` function. (Hence it should be accepted by any CSS rule that needs a `<image>` type value like above)
 
 ### Define A Paint Worklet
-- Write a paint worklet using the `registerPaint()` function.
-- Register the worklet with `CSS.paintWorklet.addModule()`.
-- Include the `paint()` CSS function.
+- Write a worklet using the `registerPaint()` function.
 
 ```js
 registerPaint('paintWorketExample', class {
     // An array of CSS custom properties that the Worklet will keep track of.
     // This array represents dependencies of a paint worklet.
     static get inputProperties() { return ['--myVariable']; }
-    // An array of input arguments that can be passed from paint() from inside the CSS.
+    // An array of input arguments that can be passed from paint()
+    // from inside the CSS.
     static get inputArguments() { return ['<color>']; }
-    // Allow or disallow opacity for colors. If set to false, all colors will be displayed with full opacity.
+    // Allow or disallow opacity for colors. If set to false,
+    // all colors will be displayed with full opacity.
     static get contextOptions() { return {alpha: true}; }
 
     /**
-     * @param ctx: 2D drawing context, almost identical to Canvas API’s 2D drawing context.
-     * @param size: An object containing the width and height of the element. Values are determined by the layout rendering process. Canvas size is the same as the actual size of the element.
-     * @param properties: Input variables defined in inputProperties
-     * @param args: An array of input arguments passed in paint function in CSS
+     * @param ctx 2D drawing context, almost identical to Canvas API’s 2D drawing context.
+     * @param size An object containing the width and height of the element.
+     *    Values are determined by the layout rendering process.
+     *    Canvas size is the same as the actual size of the element.
+     * @param properties Input variables defined in inputProperties
+     * @param args An array of input arguments passed in paint function in CSS
      */
     paint(ctx, size, properties, args) {
         /* ... */
@@ -140,4 +142,167 @@ registerPaint('paintWorketExample', class {
 });
 ```
 
+- Register the worklet with `CSS.paintWorklet.addModule()`.
+
+```js
+CSS.paintWorklet.addModule('path/to/worklet/file.js');
+```
+
+- Include the `paint()` CSS function.
+
+```css
+.exampleElement {
+    /* paintWorkletExample - name of the worklet
+       blue - argument passed to a Worklet */
+    background-image: paint(paintWorketExample, blue);
+}
+```
+
 Exmaple: [Ripple](https://github.com/GoogleChromeLabs/houdini-samples/tree/master/paint-worklet/ripple)
+
+---
+## Animation API [[doc]](https://developers.google.com/web/updates/2018/10/animation-worklet) <a id="animation-api"></a>
+Allows for user action to control the flow of animation that runs in a performant, non-blocking way.
+
+### Define A Animation Worklet
+- Write a worklet using the `registerAnimator()` function.
+
+```js
+registerAnimator('animationWorkletExample', class {
+    // Called when a new instance is created. Used for general setup.
+    constructor(options) {
+        /* ... */
+    }
+    /**
+     * @param currentTime The current time value from the defined timeline
+     * @param effect An array of effects that this animation uses
+     */
+    animate(currentTime, effect) {
+        /* ... */
+    }
+});
+```
+
+- Register the worklet with `CSS.animationWorklet.addModule()`.
+
+```js
+CSS.animationWorklet.addModule('path/to/worklet/file.js');
+```
+
+- Define an effect
+    * Keyframe Format [[doc]](https://developer.mozilla.org/en-US/docs/Web/API/Web_Animations_API/Keyframe_Formats): There should be at least two keyframes specified (representing the starting and ending states of the animation sequence). And keyframes without a specified `offset` will be evenly spaced between adjacent keyframes.
+    * `EffectTiming` [[doc]](https://developer.mozilla.org/en-US/docs/Web/API/EffectTiming): Describe timing properties for animation effects.
+
+```css
+/* CSS version*/
+
+#elementExmaple {
+    animation: rotateAndChangeColor infinite 3s linear;
+}
+
+@keyframes rotateAndChangeColor {
+    0% {
+        color: #000;
+        transform: rotate(0) translate3D(-50%, -50%, 0);    
+    }
+    30% {
+        color: #431236;
+    }
+    100% {
+        color: #000;
+        transform: rotate(360deg) translate3D(-50%, -50%, 0);
+    }
+}
+```
+```js
+/* To Javascript version */
+
+const effectExample = new KeyframeEffect(
+    elementExample,  /* Selected element that's going to be animated */
+    [ /* Animation keyframes */
+        { transform: 'rotate(0) translate3D(-50%, -50%, 0)', color: '#000' },
+        { color: '#431236', offset: 0.3},
+        { transform: 'rotate(360deg) translate3D(-50%, -50%, 0)', color: '#000' }
+    ],
+    { /* Animation options - duration, delay, iterations, etc. */
+        duration: 3000,
+        iterations: Infinity
+    },
+```
+
+- Define an animation
+```js
+/* Create new WorkletAnimation instance and run it */
+new WorkletAnimation(
+    "animationWorkletExample"  /* Worklet name */
+    effectExample,             /* Animation (effect) timeline */
+    document.timeline,         /* Input timeline; or feed scroll positions
+                                  as a timeline instead: ScrollTimeline */
+    {},                        /* Options passed to constructor */
+).play();                      /* Play animation */
+```
+
+---
+## Layout API [[doc]]() <a id="layout-api"></a>
+Allows developers to extend the browser’s layout rendering process by defining new layout modes that can be used in `display` CSS property. 
+
+### Define A Layout Worklet
+- Write a worklet using the `registerLayout()` function.
+
+```js
+registerLayout('exampleLayout', class {
+    // An array of CSS custom properties that the Worklet will keep track of
+    // that belongs to a Parent Layout element
+    static get inputProperties() { return ['--exampleVariable']; }
+    // An array of CSS custom properties that the Worklet will keep track of
+    // that belong to child elements of a Parent Layout element
+    static get childrenInputProperties() { return ['--exampleChildVariable']; }
+    static get layoutOptions() {
+        return {
+            // Can have a pre-defined value of block or normal.
+            // Determines if the boxes will be displayed as blocks or inline.
+            childDisplay: 'normal',
+            // Can have a pre-defined value of block-like or manual.
+            // It tells the browser to either pre-calculate the size or not to
+            // pre-calculate (unless a size is explicitly set), respectively.
+            sizing: 'block-like'
+        };
+    }
+    /**
+     * Defines how a box or its content fits into a layout context.
+     * @param children Child elements of a Parent Layout element.
+     * @param edges Layout Edges of a box.
+     * @param styleMap Typed OM styles of a box.
+     */
+    intrinsicSizes(children, edges, styleMap) {
+        /* ... */
+    }
+    /**
+     * @param children Child elements of a Parent Layout element.
+     * @param edges Layout Edges of a box.
+     * @param constraints Constraints of a Parent Layout.
+     * @param styleMap Typed OM styles of a box.
+     * @param breakToken Break token used to resume a layout in case of
+     *   pagination or printing.
+     */
+    layout(children, edges, constraints, styleMap, breakToken) {
+        /* ... */
+    }
+});
+```
+
+- Register the worklet with `CSS.layoutWorklet.addModule()`.
+
+```js
+CSS.layoutWorklet.addModule('path/to/worklet/file.js');
+```
+
+-  Use the `layout()` CSS function in `display` CSS property.
+
+```css
+.exampleElement {
+    display: layout(exampleLayout);
+}
+```
+
+Example: [Masonry layout](https://github.com/GoogleChromeLabs/houdini-samples/tree/master/layout-worklet/masonry)
