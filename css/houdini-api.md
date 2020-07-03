@@ -158,7 +158,7 @@ CSS.paintWorklet.addModule('path/to/worklet/file.js');
 }
 ```
 
-Exmaple: [Ripple](https://github.com/GoogleChromeLabs/houdini-samples/tree/master/paint-worklet/ripple)
+Exmaple: [Ripple](https://github.com/GoogleChromeLabs/houdini-samples/tree/master/paint-worklet/ripple) with [demo](https://googlechromelabs.github.io/houdini-samples/paint-worklet/ripple/)
 
 ---
 ## Animation API [[doc]](https://developers.google.com/web/updates/2018/10/animation-worklet) <a id="animation-api"></a>
@@ -305,4 +305,4 @@ CSS.layoutWorklet.addModule('path/to/worklet/file.js');
 }
 ```
 
-Example: [Masonry layout](https://github.com/GoogleChromeLabs/houdini-samples/tree/master/layout-worklet/masonry)
+Example: [Masonry layout](https://github.com/GoogleChromeLabs/houdini-samples/tree/master/layout-worklet/masonry) with [demo](https://googlechromelabs.github.io/houdini-samples/layout-worklet/masonry/)
