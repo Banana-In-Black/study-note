@@ -231,6 +231,7 @@ const effectExample = new KeyframeEffect(
 ```
 
 - Define an animation
+
 ```js
 /* Create new WorkletAnimation instance and run it */
 new WorkletAnimation(

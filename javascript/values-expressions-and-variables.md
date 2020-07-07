@@ -6,15 +6,25 @@ There're two kinds of values, both can be checking by `typeof(value)` or `typeof
 ### Primitive Values (Immutable)
 - Undefined: `typeof(undefined) === 'undefined'`.
 - Null: `typeof(null) === 'object'`. ([historical issue](https://stackoverflow.com/questions/18808226/why-is-typeof-null-object))
-    > In practice, `undefined` represents **unintentionally** missing value while `null` represents **intentionally** missing values. However, this is only a convention, and JavaScript doesn’t enforce this usage.
-
 - Numbers: `typeof(12.3) === 'number'`.
 - Strings: `typeof('hello') === 'string'`.
 - Booleans: `typeof(true) === 'boolean'`.
 - Symbols: `typeof(Symbol('hi')) === 'symbol'`.
 - BigInts: `typeof(BigInt(45)) === 'bigint'`.
 
-#### Immutable (Singleton)
+#### Undefined vs. Null 
+In practice, `undefined` represents **unintentionally** missing value while `null` represents **intentionally** missing values. However, this is only a convention, and JavaScript doesn’t enforce this usage.
+
+#### Not-A-Number(NaN) is actually a Number
+And So does `Infinity`, they're both numeric values.
+
+```js
+const result = 0 / 0; // NaN
+console.log(typeof(result)); // number
+console.log(typeof(Infinity)); // number
+```
+
+#### Immutable
 Trying to modify primitive values will silently be refused or result in errors depends on which mode (strict mode or not) your code is running in.
 ```js
 let str = 'yikes';
@@ -32,6 +42,13 @@ fifty.no = 456; // TypeError: Cannot create property 'no' on number '50'
 ### Object and Functions (Mutable)
 - Objects: `typeof({}) === 'object'`.
 - Function: `typeof(x => x) === 'function'`.
+
+### Equality Check
+- Same Value Equality: [`Object.is(a, b)`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is)
+- Strict Equality: `a === b`
+- Loose Equality: `a == b` ([Avoid using this](https://dorey.github.io/JavaScript-Equality-Table/?ck_subscriber_id=903219261))
+
+The difference between first two is `Object.is()` treats `+0` and `-0` (meaningless in real math) as different values, and treats `NaN` as equal.
 
 ## Expressions
 An expression evaluates to a value.
