@@ -1,5 +1,7 @@
 # Critical Rendering Path
 
+- Constructing the Object Model: Bytes → Characters → Tokens → Nodes → Object Model (DOM & CSSOM)
+
 ## The difference between `DOMContentLoaded` and `load` event
 - `DOMContentLoaded`: Event fires when the initial HTML document has been completely loaded and parsed, without waiting for stylesheets, images, and subframes to finish loading.
 - `load`: Event is fired when the whole page has loaded, including all dependent resources such as stylesheets and images.

@@ -1,5 +1,5 @@
 # Event Loop
-[[doc]](https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/EventLoop)  
+[[doc]](https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/EventLoop) [[video]](https://www.youtube.com/watch?v=8aGhZQkoFbQ)
 
 Javascript uses a single threaded runtime, but it has a concurrency model based on event loop.
 
