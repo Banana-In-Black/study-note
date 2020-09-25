@@ -1,4 +1,6 @@
-# Web Vital Metrics [[doc]](https://web.dev/vitals/)
+# Web Vital Metrics
+
+[[doc]](https://web.dev/vitals/)
 
 We can use [`Event Timing API`](https://wicg.github.io/event-timing/) and [`Element Timing API`](https://wicg.github.io/element-timing/) to measuring web vitals in the future, now they're still drafts.
 
