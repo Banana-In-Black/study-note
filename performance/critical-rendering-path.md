@@ -5,6 +5,9 @@
 ## The difference between `DOMContentLoaded` and `load` event
 
 - `DOMContentLoaded`: Event fires when the initial HTML document has been completely loaded and parsed, without waiting for stylesheets, images, and subframes to finish loading.
+
+    > <script.defer> will be executed after the document has been parsed, but before firing `DOMContentLoaded`.
+
 - `load`: Event is fired when the whole page has loaded, including all dependent resources such as stylesheets and images.
 
 ### Events Alternative: `Document.readState` [[doc]](https://developer.mozilla.org/en-US/docs/Web/API/Document/readyState)

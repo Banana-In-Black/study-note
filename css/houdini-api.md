@@ -4,7 +4,7 @@
 [[doc2]](https://www.smashingmagazine.com/2020/03/practical-overview-css-houdini/),
 [Browser Support](https://ishoudinireadyyet.com/)
 
-A group of JavaScript APIs give developer the power to extend CSS by hooking into the [rendering](../performance/rendering.md) process of a browser’s rendering engine.
+A group of JavaScript APIs give developers the power to extend CSS by hooking into the [rendering](../performance/rendering.md) process of a browser’s rendering engine.
 
 - High-level APIs: Affect rendering process
     + [Paint API](#paint-api)
