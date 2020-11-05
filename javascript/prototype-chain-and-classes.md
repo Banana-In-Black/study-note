@@ -27,7 +27,7 @@ Object.getPrototypeOf(MyConstructor) === Function.prototype; // true
 
 ### Inheritance
 
-- ES6 Class keywords: `extends`, `super` [[anchor]](#extend)
+- ES6 Class keywords: `extends`, `super` [[anchor]](#sub-classing-with-extend)
 - `Object.create(proto[, propertiesObject])` [[doc]](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create)
 
 ```js
@@ -71,8 +71,10 @@ Child.prototype = new Parent();
 
 - `class` body is executed in strict mode.
 - `class` methods are not enumerable.
+- `class` methods has no prototype, and can't be used as constructor.
 - `class` [getter](https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Functions/get) / setter are defined on prototype, and they aren't enumerable by default.
 - `class` instance(private & public) / static fields declaration are still proposals.
+- You can only create an instance of this `class` by using `new`.
 
 ### Define classes
 
@@ -135,11 +137,12 @@ Point.distance = function(a, b) {
 };
 ```
 
-### Sub classing with `extend` <a id="extend"></a>
+### ES6 Sub classing with `extend`
 
 - Classes can only extend one superclass.
 - Classes cannot extend regular (non-constructible) objects. If you want to inherit from a regular object, you can instead use `Object.setPrototypeOf()`.
-- If there is a constructor present in the subclass, it needs to first call `super()` before using `this`.
+- If there is a constructor present in the subclass, it needs to first call `super()` before using `this` and `super()` must be called, or you'll get a `ReferenceError`.
+  - The only way not to call `super()` in a subclass constructor is to explicitly return an object.
 
 ```js
 class Animal {
