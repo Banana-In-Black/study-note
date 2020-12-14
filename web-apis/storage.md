@@ -9,7 +9,7 @@
 
 They're both asynchronous, and will not block the main thread. They're accessible from the window object, web workers, and service workers.
 
-The reason not to use other storage mechanism is because most of them are synchronous and limited on space.
+The reason __not__ to use other storage mechanism is because most of them are synchronous and limited on space.
 
 ## Tips
 

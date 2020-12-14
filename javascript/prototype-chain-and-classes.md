@@ -70,9 +70,8 @@ Child.prototype = new Parent();
 ## Classes [[doc]](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes)
 
 - `class` body is executed in strict mode.
-- `class` methods are not enumerable.
+- `class` methods (includes [getter](https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Functions/get) / setter) are defined on prototype, and they aren't enumerable by default.
 - `class` methods has no prototype, and can't be used as constructor.
-- `class` [getter](https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Functions/get) / setter are defined on prototype, and they aren't enumerable by default.
 - `class` instance(private & public) / static fields declaration are still proposals.
 - You can only create an instance of this `class` by using `new`.
 
